@@ -1,5 +1,30 @@
 document.addEventListener('DOMContentLoaded', function () {
 
+    // --- NEW: Custom Cursor Logic ---
+    const cursor = document.querySelector('.custom-cursor');
+    const cursorDot = document.querySelector('.cursor-dot');
+    const cursorOutline = document.querySelector('.cursor-outline');
+    
+    window.addEventListener('mousemove', (e) => {
+        const posX = e.clientX;
+        const posY = e.clientY;
+
+        cursorDot.style.left = `${posX}px`;
+        cursorDot.style.top = `${posY}px`;
+
+        cursorOutline.animate({
+            left: `${posX}px`,
+            top: `${posY}px`
+        }, { duration: 500, fill: 'forwards' });
+    });
+
+    const interactiveElements = document.querySelectorAll('a, button, .project-item, .achievement-card, .filter-btn');
+    interactiveElements.forEach(el => {
+        el.addEventListener('mouseenter', () => cursor.classList.add('hover'));
+        el.addEventListener('mouseleave', () => cursor.classList.remove('hover'));
+    });
+
+
     // --- Mouse-Follow Spotlight Effect ---
     const spotlight = document.querySelector('.spotlight');
     if (spotlight) {
@@ -71,7 +96,6 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     };
 
-    // Set initial container height and animate first list
     const initialList = document.querySelector('.project-list:not(.hidden)');
     if (initialList) {
         displayArea.style.height = `${initialList.offsetHeight}px`;
@@ -91,22 +115,18 @@ document.addEventListener('DOMContentLoaded', function () {
             const activeList = document.querySelector('.project-list:not(.hidden)');
 
             if (targetList === activeList) return;
-
-            // 1. Temporarily make the target list visible to measure its real height
+            
             targetList.classList.remove('hidden');
             const targetHeight = targetList.offsetHeight;
-            targetList.classList.add('hidden'); // Immediately hide it again
+            targetList.classList.add('hidden');
 
-            // 2. Animate the container to the height of the new list
             displayArea.style.height = `${targetHeight}px`;
 
-            // 3. Reset and hide the old list
             if (activeList) {
                 resetListItems(activeList);
                 activeList.classList.add('hidden');
             }
 
-            // 4. Show and animate the new list
             targetList.classList.remove('hidden');
             animateListItems(targetList);
         });
@@ -118,16 +138,29 @@ document.addEventListener('DOMContentLoaded', function () {
     const modalImg = document.getElementById('modal-img');
     const modalTitle = document.getElementById('modal-title');
     const modalDesc = document.getElementById('modal-desc');
-    const closeModal = document.querySelector('.close-button');
+    const modalPlaceholder = document.getElementById('modal-placeholder');
+    const closeModalBtn = document.querySelector('.close-button');
     const fullscreenWrapper = document.getElementById('fullscreen-wrapper');
     const fullscreenExitBtn = document.getElementById('fullscreen-exit-btn');
 
-
     clickableCards.forEach(card => {
         card.addEventListener('click', () => {
-            modalImg.src = card.dataset.img;
-            modalTitle.textContent = card.dataset.title;
-            modalDesc.textContent = card.dataset.desc;
+            const imgSrc = card.dataset.img;
+            const title = card.dataset.title;
+            const desc = card.dataset.desc;
+
+            modalTitle.textContent = title;
+            modalDesc.textContent = desc;
+
+            if (imgSrc && imgSrc.trim() !== "") {
+                modalImg.src = imgSrc;
+                modalImg.style.display = 'block';
+                modalPlaceholder.style.display = 'none';
+            } else {
+                modalImg.style.display = 'none';
+                modalPlaceholder.style.display = 'flex';
+            }
+            
             modal.classList.add('active');
             body.classList.add('modal-open');
         });
@@ -138,7 +171,7 @@ document.addEventListener('DOMContentLoaded', function () {
         body.classList.remove('modal-open');
     };
 
-    closeModal.addEventListener('click', hideModal);
+    closeModalBtn.addEventListener('click', hideModal);
     modal.addEventListener('click', (e) => { 
         if (e.target === modal) { 
             hideModal(); 
@@ -152,24 +185,22 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // --- Fullscreen Image Logic ---
     if (modalImg && fullscreenWrapper && fullscreenExitBtn) {
-        // Open fullscreen when image is clicked
         modalImg.addEventListener('click', () => {
             if (fullscreenWrapper.requestFullscreen) {
                 fullscreenWrapper.requestFullscreen();
-            } else if (fullscreenWrapper.webkitRequestFullscreen) { /* Safari */
+            } else if (fullscreenWrapper.webkitRequestFullscreen) {
                 fullscreenWrapper.webkitRequestFullscreen();
-            } else if (fullscreenWrapper.msRequestFullscreen) { /* IE11 */
+            } else if (fullscreenWrapper.msRequestFullscreen) {
                 fullscreenWrapper.msRequestFullscreen();
             }
         });
 
-        // Close fullscreen when the new button is clicked
         fullscreenExitBtn.addEventListener('click', () => {
             if (document.exitFullscreen) {
                 document.exitFullscreen();
-            } else if (document.webkitExitFullscreen) { /* Safari */
+            } else if (document.webkitExitFullscreen) {
                 document.webkitExitFullscreen();
-            } else if (document.msExitFullscreen) { /* IE11 */
+            } else if (document.msExitFullscreen) {
                 document.msExitFullscreen();
             }
         });
