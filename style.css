@@ -81,6 +81,8 @@ nav { display: flex; justify-content: space-between; align-items: center; }
 .icon1 { animation-duration: 10s; }
 .icon2 { animation-duration: 12s; animation-delay: -5s; }
 .icon3 { animation-duration: 15s; animation-delay: -2s; }
+.icon4 { animation-duration: 11s; animation-delay: -8s; }
+.icon5 { animation-duration: 13s; animation-delay: -10s; }
 @keyframes orbit { from { transform: rotate(0deg) translateX(230px) rotate(0deg); } to { transform: rotate(360deg) translateX(230px) rotate(-360deg); } }
 
 /* Buttons */
@@ -111,27 +113,20 @@ nav { display: flex; justify-content: space-between; align-items: center; }
 .skill-item { background: rgba(245, 230, 224, 0.1); border: 1px solid var(--secondary-color); padding: 0.8rem 1.5rem; border-radius: 50px; color: var(--secondary-color); font-weight: 600; transition: all 0.3s ease; }
 .skill-item:hover { background: var(--secondary-color); color: var(--bg-color-dark); transform: translateY(-5px); box-shadow: 0 0 15px var(--secondary-color); }
 
-/* Projects Section */
-.project-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 2rem; }
-.project-card { padding: 1.5rem; text-align: center; cursor: pointer; }
-.project-card h3 { color: var(--primary-color); margin-bottom: 0.5rem; font-family: var(--heading-font); font-size: 1.4rem; font-weight: 600; }
-.project-card p { color: var(--secondary-color); }
-
-/* Achievements Section (Horizontal Layout) */
+/* Achievements Section */
 .achievements-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 2rem; }
 .achievement-card {
-    padding: 1.5rem; /* Reduced padding to match project cards */
+    padding: 1.5rem;
     text-align: center;
-    cursor: pointer; /* Indicate it's clickable */
-    /* Inherits card-glass hover effects */
+    cursor: pointer;
 }
-.achievement-icon { font-size: 3rem; color: var(--primary-color); margin-bottom: 1rem; /* Adjusted margin */ text-shadow: 0 0 15px var(--primary-color); transition: transform 0.4s var(--smooth-ease); }
-.achievement-card:hover .achievement-icon { transform: scale(1.1) rotate(-10deg); /* Slightly less dramatic than previous */ }
-.achievement-card h3 { color: var(--secondary-color); margin-bottom: 0.5rem; /* Adjusted margin */ font-family: var(--heading-font); font-size: 1.4rem; font-weight: 600; }
+.achievement-icon { font-size: 3rem; color: var(--primary-color); margin-bottom: 1rem; text-shadow: 0 0 15px var(--primary-color); transition: transform 0.4s var(--smooth-ease); }
+.achievement-card:hover .achievement-icon { transform: scale(1.1) rotate(-10deg); }
+.achievement-card h3 { color: var(--secondary-color); margin-bottom: 0.5rem; font-family: var(--heading-font); font-size: 1.4rem; font-weight: 600; }
 .achievement-card p {
-    color: var(--light-text-color); /* Lighter text for description */
-    font-size: 0.95rem; /* Slightly smaller font */
-    text-align: center; /* Keeping it centered as requested */
+    color: var(--light-text-color);
+    font-size: 0.95rem;
+    text-align: center;
 }
 
 /* Contact Section */
@@ -151,13 +146,66 @@ footer { text-align: center; padding: 2.5rem 5%; background-color: #000; border-
 /* Project Modal Styles */
 .modal { position: fixed; z-index: 2000; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.85); display: flex; align-items: center; justify-content: center; opacity: 0; visibility: hidden; transition: opacity 0.5s var(--smooth-ease), visibility 0.5s; }
 .modal.active { opacity: 1; visibility: visible; }
-.modal-content { position: relative; max-width: 800px; width: 90%; margin: auto; transform: scale(0.95); transition: transform 0.5s var(--smooth-ease); padding: 2rem; /* Added padding to modal content */ }
+.modal-content { position: relative; max-width: 800px; width: 90%; margin: auto; transform: scale(0.95); transition: transform 0.5s var(--smooth-ease); padding: 2rem; }
 .modal.active .modal-content { transform: scale(1); }
-.modal img { width: 100%; height: auto; max-height: 400px; object-fit: contain; /* Ensure image fits well */ border-radius: 10px; margin-bottom: 1.5rem; background-color: rgba(255,255,255,0.05); /* Slight background for images */ padding: 10px; /* Padding around image */ }
+.modal img {
+    width: 100%;
+    height: auto;
+    max-height: 400px;
+    object-fit: contain;
+    border-radius: 10px;
+    margin-bottom: 1.5rem;
+    background-color: rgba(255,255,255,0.05);
+    padding: 10px;
+    cursor: zoom-in;
+}
 .modal h3 { font-family: var(--heading-font); font-weight: 700; color: var(--primary-color); font-size: 2rem; margin-bottom: 1rem; }
 .modal p { font-size: 1.1rem; line-height: 1.8; text-align: justify; }
-.close-button { color: #fff; position: absolute; top: 1rem; right: 1.5rem; font-size: 2.5rem; font-weight: bold; cursor: pointer; transition: color 0.3s ease, transform 0.3s ease; }
+.close-button {
+    color: #fff;
+    position: absolute;
+    top: 1rem;
+    right: 1.5rem;
+    font-size: 2.5rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: color 0.3s ease, transform 0.3s ease;
+    z-index: 10;
+}
 .close-button:hover { color: var(--primary-color); transform: rotate(90deg); }
+
+/* Fullscreen Image Button Styles */
+#fullscreen-wrapper {
+    position: relative;
+    background-color: #000;
+}
+#fullscreen-exit-btn {
+    display: none;
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 2147483647;
+    background-color: rgba(0, 0, 0, 0.5);
+    color: white;
+    border: 2px solid white;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    font-size: 24px;
+    line-height: 36px;
+    text-align: center;
+    cursor: pointer;
+    transition: transform 0.3s ease;
+}
+#fullscreen-exit-btn:hover {
+    transform: scale(1.1);
+}
+#fullscreen-wrapper:fullscreen #fullscreen-exit-btn {
+    display: block;
+}
+#fullscreen-wrapper:fullscreen #modal-img {
+    max-height: 100vh;
+}
 
 /* On-Scroll Animations */
 [class^="animate-"] { opacity: 0; transition: opacity 1s var(--smooth-ease), transform 1s var(--smooth-ease); }
@@ -167,6 +215,72 @@ footer { text-align: center; padding: 2.5rem 5%; background-color: #000; border-
 .animate-fade-in-right { transform: translateX(50px); }
 .animate-scale-in { transform: scale(0.9); }
 .in-view { opacity: 1; transform: translate(0, 0) scale(1); }
+
+/* Projects Section Styles */
+.project-filters {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    margin-bottom: 3rem;
+}
+.filter-btn {
+    padding: 0.7rem 2rem;
+    font-family: var(--heading-font);
+    font-weight: 600;
+    font-size: 1rem;
+    border-radius: 50px;
+    cursor: pointer;
+    transition: all 0.4s var(--smooth-ease);
+    background: transparent;
+    color: var(--primary-color);
+    border: 2px solid var(--primary-color);
+}
+.filter-btn:hover {
+    background-color: var(--primary-color);
+    color: var(--bg-color-dark);
+    transform: translateY(-5px);
+}
+.filter-btn.active {
+    background: linear-gradient(45deg, #D9A7A0, #BF8A82);
+    color: #000;
+    border-color: #D9A7A0;
+    box-shadow: 0 0 15px var(--primary-color);
+}
+.project-display-area {
+    transition: height 0.4s ease-in-out;
+}
+.project-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+    gap: 2rem;
+}
+.project-list.hidden {
+    display: none;
+}
+.project-item {
+    padding: 1.5rem;
+    text-align: center;
+    cursor: pointer;
+    opacity: 0;
+    transform: scale(0.9);
+    transition: opacity 0.5s ease, transform 0.5s ease;
+}
+.project-item.visible {
+    opacity: 1;
+    transform: scale(1);
+}
+.project-item h3 {
+    color: var(--primary-color);
+    margin-bottom: 0.5rem;
+    font-family: var(--heading-font);
+    font-size: 1.4rem;
+    font-weight: 600;
+    transition: transform 0.4s var(--smooth-ease), text-shadow 0.4s ease;
+}
+.project-item:hover h3 {
+    transform: scale(1.05);
+    text-shadow: 0 0 15px var(--primary-color);
+}
 
 /* --- RESPONSIVE DESIGN --- */
 @media (max-width: 992px) {
@@ -189,7 +303,7 @@ footer { text-align: center; padding: 2.5rem 5%; background-color: #000; border-
     .subtitle-hero { font-size: 1.5rem; }
     .profile-pic-container { width: 250px; height: 250px; }
     @keyframes orbit { from { transform: rotate(0deg) translateX(150px) rotate(0deg); } to { transform: rotate(360deg) translateX(150px) rotate(-360deg); } }
-    .project-grid, .achievements-grid { grid-template-columns: 1fr; }
+    .project-list, .achievements-grid { grid-template-columns: 1fr; }
     .modal-content { width: 95%; }
     .modal h3 { font-size: 1.5rem; }
 }
