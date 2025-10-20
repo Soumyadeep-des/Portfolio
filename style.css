@@ -69,7 +69,7 @@ body {
     overflow-x: hidden;
     cursor: none; 
 }
-a, button, .project-item, .achievement-card, .filter-btn {
+a, button, .project-item, .achievement-card, .filter-btn, .certification-item {
     cursor: none;
 }
 body.nav-open, body.modal-open { overflow: hidden; }
@@ -227,10 +227,39 @@ nav { display: flex; justify-content: space-between; align-items: center; }
 footer { text-align: center; padding: 2.5rem 5%; background-color: #000; border-top: 1px solid rgba(217, 167, 160, 0.2); color: var(--light-text-color); }
 
 /* Project Modal Styles */
-.modal { position: fixed; z-index: 2000; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.85); display: flex; align-items: center; justify-content: center; opacity: 0; visibility: hidden; transition: opacity 0.5s var(--smooth-ease), visibility 0.5s; }
-.modal.active { opacity: 1; visibility: visible; }
-.modal-content { position: relative; max-width: 800px; width: 90%; margin: auto; transform: scale(0.95); transition: transform 0.5s var(--smooth-ease); padding: 2rem; }
-.modal.active .modal-content { transform: scale(1); }
+.modal { 
+    position: fixed; 
+    z-index: 2000; 
+    left: 0; 
+    top: 0; 
+    width: 100%; 
+    height: 100%; 
+    background-color: rgba(0,0,0,0.85); 
+    display: flex; 
+    align-items: center; 
+    justify-content: center; 
+    opacity: 0; 
+    visibility: hidden; 
+    transition: opacity 0.4s var(--smooth-ease), visibility 0.4s; 
+}
+.modal.active { 
+    opacity: 1; 
+    visibility: visible; 
+}
+.modal-content { 
+    position: relative; 
+    max-width: 800px; 
+    width: 90%; 
+    margin: auto; 
+    opacity: 0;
+    transform: translateY(40px);
+    transition: transform 0.4s var(--smooth-ease), opacity 0.4s var(--smooth-ease);
+    padding: 2rem; 
+}
+.modal.active .modal-content { 
+    opacity: 1;
+    transform: translateY(0); 
+}
 .modal img { width: 100%; height: auto; max-height: 400px; object-fit: contain; border-radius: 10px; margin-bottom: 1.5rem; background-color: rgba(255,255,255,0.05); padding: 10px; }
 .modal h3 { font-family: var(--heading-font); font-weight: 700; color: var(--primary-color); font-size: 2rem; margin-bottom: 1rem; }
 .modal p { font-size: 1.1rem; line-height: 1.8; text-align: justify; }
@@ -279,6 +308,61 @@ footer { text-align: center; padding: 2.5rem 5%; background-color: #000; border-
 .project-item.visible { opacity: 1; transform: scale(1); }
 .project-item h3 { color: var(--primary-color); margin-bottom: 0.5rem; font-family: var(--heading-font); font-size: 1.4rem; font-weight: 600; transition: transform 0.4s var(--smooth-ease), text-shadow 0.4s ease; }
 .project-item:hover h3 { transform: scale(1.05); text-shadow: 0 0 15px var(--primary-color); }
+
+/* Certifications Section */
+.certifications-container {
+    max-width: 900px;
+    margin: 0 auto;
+    display: grid;
+    gap: 2.5rem;
+}
+.certification-item {
+    display: flex;
+    align-items: center;
+    gap: 2.5rem;
+    padding: 2rem;
+    cursor: pointer; /* Makes it feel clickable */
+}
+.cert-icon-col {
+    flex-shrink: 0;
+    font-size: 4rem;
+    color: var(--primary-color);
+    text-shadow: 0 0 20px var(--primary-color);
+    transition: transform 0.4s var(--smooth-ease);
+}
+.certification-item:hover .cert-icon-col {
+    transform: scale(1.15) rotate(-8deg);
+}
+.cert-details-col {
+    text-align: left;
+}
+.cert-details-col h3 {
+    font-family: var(--heading-font);
+    font-size: 1.8rem;
+    color: var(--secondary-color);
+    margin-bottom: 0.5rem;
+    font-weight: 600;
+}
+.cert-details-col .cert-issuer {
+    font-family: var(--body-font);
+    font-size: 1.1rem;
+    color: var(--primary-color);
+    margin-bottom: 0.8rem;
+    font-weight: 600;
+}
+.cert-details-col .cert-desc {
+    color: var(--light-text-color);
+    font-size: 1rem;
+}
+
+/* Alternate layout for the second item */
+.certification-item:nth-child(even) {
+    flex-direction: row-reverse;
+}
+.certification-item:nth-child(even) .cert-details-col {
+    text-align: right;
+}
+
 
 /* --- RESPONSIVE DESIGN --- */
 
@@ -375,6 +459,18 @@ footer { text-align: center; padding: 2.5rem 5%; background-color: #000; border-
     }
     .modal h3 { font-size: 1.5rem; }
     .modal p { font-size: 1rem; }
+    
+    /* -- Certifications on Mobile -- */
+    .certification-item, .certification-item:nth-child(even) {
+        flex-direction: column;
+        text-align: center;
+    }
+    .certification-item:nth-child(even) .cert-details-col {
+        text-align: center;
+    }
+    .cert-icon-col {
+        margin-bottom: 1rem;
+    }
 }
 
 
@@ -428,4 +524,10 @@ footer { text-align: center; padding: 2.5rem 5%; background-color: #000; border-
     .skill-category, .contact-card {
         padding: 2rem;
     }
+}
+
+/* --- Fullscreen Cursor Fix --- */
+#fullscreen-wrapper:fullscreen,
+#fullscreen-wrapper:fullscreen * {
+    cursor: auto !important;
 }
