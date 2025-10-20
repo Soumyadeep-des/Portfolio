@@ -18,7 +18,7 @@ document.addEventListener('DOMContentLoaded', function () {
         }, { duration: 500, fill: 'forwards' });
     });
 
-    const interactiveElements = document.querySelectorAll('a, button, .project-item, .achievement-card, .filter-btn');
+    const interactiveElements = document.querySelectorAll('a, button, .project-item, .achievement-card, .filter-btn, .certification-item');
     interactiveElements.forEach(el => {
         el.addEventListener('mouseenter', () => cursor.classList.add('hover'));
         el.addEventListener('mouseleave', () => cursor.classList.remove('hover'));
@@ -133,7 +133,7 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     // --- Project/Achievement Modal Logic ---
-    const clickableCards = document.querySelectorAll('.project-item, .achievement-card');
+    const clickableCards = document.querySelectorAll('.project-item, .achievement-card, .certification-item');
     const modal = document.getElementById('project-modal');
     const modalImg = document.getElementById('modal-img');
     const modalTitle = document.getElementById('modal-title');
